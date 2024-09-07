@@ -4,8 +4,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/app  # Bind mount the current directory
-      - ./files:/files
+      - .:/app  # Bind mount the current directory to allow live code changes
+      - /files  # Store files inside the container
     depends_on:
       - redis
 
@@ -13,3 +13,5 @@ services:
     image: "redis:alpine"
     ports:
       - "6379:6379"
+    volumes:
+      - /data  # Store Redis data inside the container
