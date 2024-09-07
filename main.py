@@ -78,11 +78,11 @@ async def delete_file(file_id: str):
 @app.get("/files")
 async def list_files():
     file_keys = redis_client.keys("file:*")
-    files = []
+    files = [None] * len(file_keys)
 
-    for key in file_keys:
+    for i, key in enumerate(file_keys):
         file_id = key.split(":")[1]  # Extract file_id from Redis key
         metadata = redis_client.hgetall(key)
-        files.append({"file_id": file_id, "metadata": metadata})
+        files[i] = {"file_id": file_id, "metadata": metadata}
 
     return files
